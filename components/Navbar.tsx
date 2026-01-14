@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 interface NavbarProps {
   currentRole: UserRole;
   onNavigate: (view: 'HOME' | 'PORTAL' | 'ADMIN' | 'FUNNEL') => void;
-  onAboutClick: () => void;
   onLogout: () => void;
   onHomeClick: () => void;
   onServicesClick: () => void;
@@ -18,7 +17,6 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ 
   currentRole, 
   onNavigate, 
-  onAboutClick, 
   onLogout, 
   onHomeClick,
   onServicesClick,
@@ -82,16 +80,6 @@ const Navbar: React.FC<NavbarProps> = ({
           className={navLinkClasses}
         >
           Services
-          <motion.span className={underlineClasses} />
-        </motion.button>
-
-        <motion.button 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onAboutClick} 
-          className={navLinkClasses}
-        >
-          About
           <motion.span className={underlineClasses} />
         </motion.button>
 

@@ -357,71 +357,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* About Us Section */}
-      <section id="about-section" className="py-40 px-6 md:px-12 bg-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="h-px w-12 bg-sky-500" />
-                <span className="text-sky-400 font-bold uppercase tracking-[0.4em] text-[10px]">The Identity</span>
-              </div>
-              <h2 className="text-5xl md:text-7xl font-bold font-heading mb-10 tracking-tighter uppercase leading-none text-white">
-                About Us<br/>
-                <span className="text-gray-500 text-3xl md:text-4xl block mt-4">We're Jetfuel. We Build What Matters.</span>
-              </h2>
-              <div className="space-y-6 text-gray-400 text-lg leading-relaxed font-light">
-                <p>
-                  We're a creative agency for brands that refuse to blend in. Founded on the belief that great design drives great results, we combine bold creativity with strategic thinking to help businesses stand out and scale up.
-                </p>
-                <div className="p-8 glass rounded-3xl border border-sky-500/20 bg-sky-500/5 mt-10 transform-gpu">
-                  <h3 className="text-sky-400 font-bold uppercase tracking-[0.2em] text-xs mb-4">Our Mission</h3>
-                  <p className="text-white text-xl font-medium leading-relaxed">
-                    To fuel the success of ambitious brands by delivering exceptional digital experiences. We believe that every business deserves a powerful digital presence—and we're here to make that happen.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ duration: 0.6 }}
-              className="space-y-12"
-            >
-              <div className="glass p-10 rounded-[3rem] border border-white/5 transform-gpu">
-                <p className="text-gray-300 text-lg leading-relaxed mb-10 italic">
-                  "We're not interested in cookie-cutter solutions. Every project we take on is treated as unique, because your brand is unique. Our team combines strategy, creativity, and technical expertise to build digital products that actually work."
-                </p>
-                
-                <div className="pt-10 border-t border-white/5">
-                  <h3 className="text-3xl font-bold font-heading mb-8 uppercase tracking-tight text-white">Our Values</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {[
-                      { title: "Bold Innovation", desc: "We push boundaries, challenge conventions, and embrace new ideas. Playing it safe isn't in our DNA." },
-                      { title: "Results-Driven", desc: "Pretty isn't enough. Every decision we make is measured by its impact on your bottom line." },
-                      { title: "Fast Execution", desc: "We move fast without breaking things. Speed matters in digital, and we deliver without delays." },
-                      { title: "True Partnership", desc: "We're not vendors—we're partners. Your success is our success, and we're invested in it." }
-                    ].map((value, i) => (
-                      <div key={i}>
-                        <h4 className="text-sky-400 font-bold uppercase tracking-widest text-xs mb-2">{value.title}</h4>
-                        <p className="text-gray-500 text-sm leading-relaxed">{value.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Contact Section - Optimized for Scroll Performance & Light Mode */}
       <section id="contact-section" className="py-40 px-6 md:px-12 bg-zinc-950 border-t border-white/5 relative overflow-hidden">
         {/* Simplified Background Glow for performance */}
@@ -549,7 +484,6 @@ const App: React.FC = () => {
           else if (view === 'PORTAL') initiateLogin(UserRole.CLIENT);
           else setCurrentView(view);
         }} 
-        onAboutClick={() => scrollToSection('about-section')}
         onServicesClick={() => scrollToSection('services-section')}
         onContactClick={() => scrollToSection('contact-section')}
         onLogout={handleLogout} 
