@@ -5,9 +5,8 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      // For GitHub Pages under https://<user>.github.io/jetfuel-digital-agency/
-      // If you deploy at the root (repo named <user>.github.io), remove this base.
-      base: '/jetfuel-digital-agency/',
+      // For GitHub Pages under https://jetfuelcreatives.github.io/Jetfuel-Systems-Agency/
+      base: '/Jetfuel-Systems-Agency/',
       server: {
         port: 3000,
         host: '0.0.0.0',
