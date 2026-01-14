@@ -1,0 +1,9 @@
+
+{
+  "name": "JetFuel Digital Agency",
+  "description": "A premium, high-performance digital agency platform featuring a sleek dark mode UI with cyan and red accents, a multi-step sales funnel, and a robust client/admin portal with real-time project tracking and AI-powered insights.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JetFuel | Bold. Dark. Performance.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .glass {
+      background: rgba(18, 18, 18, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .jet-glow:hover {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    /* Light Theme Overrides */
+    body.light-theme {
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+    body.light-theme .glass {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(15, 23, 42, 0.1);
+      color: #0F172A;
+    }
+    body.light-theme .text-white { color: #0F172A !important; }
+    body.light-theme .text-gray-400, 
+    body.light-theme .text-gray-500 { color: #475569 !important; }
+    body.light-theme .bg-black { background-color: #F8FAFC !important; }
+    body.light-theme .bg-zinc-950 { background-color: #F1F5F9 !important; }
+    body.light-theme .bg-gray-900 { background-color: #E2E8F0 !important; }
+    body.light-theme .border-white\/5 { border-color: rgba(15, 23, 42, 0.05) !important; }
+    body.light-theme .border-white\/10 { border-color: rgba(15, 23, 42, 0.1) !important; }
+    body.light-theme .text-sky-400 { color: #0284C7 !important; }
+    body.light-theme .bg-sky-500\/5 { background-color: rgba(14, 165, 233, 0.05) !important; }
+    body.light-theme .bg-white\/5 { background-color: rgba(15, 23, 42, 0.05) !important; }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0ea5e9;
+      border-radius: 4px;
+    }
+  </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
