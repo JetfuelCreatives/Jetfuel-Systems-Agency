@@ -1,9 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Fixed: Initialize the Gemini API client using the environment variable directly as per guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = process.env.API_KEY;
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getProjectAssistantResponse = async (query: string, projectContext: string) => {
+  if (!ai) return "AI assistant is not configured. Add GEMINI_API_KEY to enable.";
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',

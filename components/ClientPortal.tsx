@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MOCK_PROJECTS, MOCK_USER } from '../constants';
 import { Project } from '../types';
-import { getProjectAssistantResponse } from '../services/gemini';
 
 const ClientPortal: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project>(MOCK_PROJECTS[0]);
@@ -21,11 +20,16 @@ const ClientPortal: React.FC = () => {
     setAiQuery('');
     setAiLoading(true);
 
-    const context = `Project: ${selectedProject.title}, Status: ${selectedProject.status}, Progress: ${selectedProject.progress}%`;
-    const response = await getProjectAssistantResponse(userMsg, context);
-    
-    setAiMessages(prev => [...prev, { role: 'ai', content: response || "I'm sorry, I couldn't process that." }]);
-    setAiLoading(false);
+    try {
+      const { getProjectAssistantResponse } = await import('../services/gemini');
+      const context = `Project: ${selectedProject.title}, Status: ${selectedProject.status}, Progress: ${selectedProject.progress}%`;
+      const response = await getProjectAssistantResponse(userMsg, context);
+      setAiMessages(prev => [...prev, { role: 'ai', content: response || "I'm sorry, I couldn't process that." }]);
+    } catch (err) {
+      setAiMessages(prev => [...prev, { role: 'ai', content: "AI assistant is not available right now." }]);
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   // Fixed: Added 'as const' to ease to satisfy Framer Motion type requirements
