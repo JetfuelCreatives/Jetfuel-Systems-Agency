@@ -1,35 +1,20 @@
 
 import React from 'react';
-import { UserRole } from '../types';
 import { motion } from 'framer-motion';
 
 interface NavbarProps {
-  currentRole: UserRole;
-  onNavigate: (view: 'HOME' | 'PORTAL' | 'ADMIN' | 'FUNNEL') => void;
-  onLogout: () => void;
+  onNavigate: (view: 'HOME' | 'FUNNEL') => void;
   onHomeClick: () => void;
   onServicesClick: () => void;
   onContactClick: () => void;
-  isDarkMode: boolean;
-  onToggleTheme: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
-  currentRole, 
   onNavigate, 
-  onLogout, 
   onHomeClick,
   onServicesClick,
   onContactClick,
-  isDarkMode,
-  onToggleTheme
 }) => {
-  const handleLogoutClick = () => {
-    if (window.confirm('Are you sure you want to log out?')) {
-      onLogout();
-    }
-  };
-
   const navLinkClasses = "text-sm font-bold hover:text-sky-400 transition-colors uppercase tracking-[0.2em] relative group py-2";
   const underlineClasses = "absolute bottom-0 left-0 w-0 h-[2px] bg-sky-500 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#0ea5e9]";
 
@@ -103,54 +88,6 @@ const Navbar: React.FC<NavbarProps> = ({
           className="bg-sky-500 hover:bg-sky-400 px-6 py-2 rounded-full text-[10px] font-black transition-all text-black uppercase tracking-[0.2em] border border-sky-400/50"
         >
           Start Project
-        </motion.button>
-      </div>
-
-      <div className="flex items-center gap-6">
-        {currentRole === UserRole.GUEST ? (
-          <motion.button 
-            whileHover={{ color: '#38bdf8' }}
-            onClick={() => onNavigate('PORTAL')} 
-            className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 transition-colors"
-          >
-            Client Login
-          </motion.button>
-        ) : (
-          <div className="flex items-center gap-6">
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              onClick={() => onNavigate(currentRole === UserRole.ADMIN ? 'ADMIN' : 'PORTAL')}
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-sky-400 hover:text-sky-300 transition-colors"
-            >
-              {currentRole === UserRole.ADMIN ? 'Command Center' : 'Dashboard'}
-            </motion.button>
-            <motion.button 
-              whileHover={{ color: '#ffffff' }}
-              onClick={handleLogoutClick}
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 transition-colors"
-            >
-              Logout
-            </motion.button>
-          </div>
-        )}
-
-        {/* Theme Toggle Button Moved After Login Section */}
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 15 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={onToggleTheme}
-          className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center hover:border-sky-500/50 hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all"
-          title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-        >
-          {isDarkMode ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-sky-400">
-              <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-sky-600">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-            </svg>
-          )}
         </motion.button>
       </div>
     </nav>

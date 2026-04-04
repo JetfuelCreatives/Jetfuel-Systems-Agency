@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import SalesFunnel from './components/SalesFunnel';
 import { supabase, isSupabaseConfigured } from './services/supabase';
-import ClientPortal from './components/ClientPortal';
-import AdminDashboard from './components/AdminDashboard';
-import LoginForm from './components/LoginForm';
-import SignUpForm from './components/SignUpForm';
-import { UserRole } from './types';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type AppView = 'HOME' | 'PORTAL' | 'ADMIN' | 'FUNNEL' | 'LOGIN' | 'SIGNUP';
+type AppView = 'HOME' | 'FUNNEL';
 
 // Optimized: More lenient margin triggers animations earlier for a faster feel
 const sectionAnimation = {
@@ -21,42 +16,7 @@ const sectionAnimation = {
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('HOME');
-  const [role, setRole] = useState<UserRole>(UserRole.GUEST);
-  const [loginTarget, setLoginTarget] = useState<UserRole>(UserRole.GUEST);
   const [contactSubmitted, setContactSubmitted] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    if (!isDarkMode) {
-      document.body.classList.add('light-theme');
-    } else {
-      document.body.classList.remove('light-theme');
-    }
-  }, [isDarkMode]);
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  const handleLogout = () => {
-    if (window.confirm('Are you sure you want to log out?')) {
-      setRole(UserRole.GUEST);
-      setCurrentView('HOME');
-    }
-  };
-
-  const initiateLogin = (target: UserRole) => {
-    setLoginTarget(target);
-    setCurrentView('LOGIN');
-  };
-
-  const handleLoginSuccess = () => {
-    setRole(loginTarget);
-    setCurrentView(loginTarget === UserRole.ADMIN ? 'ADMIN' : 'PORTAL');
-  };
-
-  const handleSignUpSuccess = () => {
-    setRole(UserRole.CLIENT);
-    setCurrentView('PORTAL');
-  };
 
   const scrollToSection = (id: string) => {
     if (currentView !== 'HOME') {
@@ -102,11 +62,8 @@ const App: React.FC = () => {
     setTimeout(() => setContactSubmitted(false), 5000);
   };
 
-  const inputClasses = `w-full transition-all text-sm outline-none focus:border-sky-500 px-5 py-4 rounded-2xl border ${
-    isDarkMode 
-      ? 'bg-black/40 border-white/5 text-white placeholder-gray-600' 
-      : 'bg-white/90 border-slate-200 text-slate-900 placeholder-slate-400 shadow-sm'
-  }`;
+  const inputClasses =
+    'w-full transition-all text-sm outline-none focus:border-sky-500 px-5 py-4 rounded-2xl border bg-black/40 border-white/5 text-white placeholder-gray-600';
 
   const renderHome = () => (
     <div className="min-h-screen bg-black transition-colors duration-400">
@@ -200,15 +157,6 @@ const App: React.FC = () => {
             </motion.div>
           ))}
         </div>
-
-        <motion.div {...sectionAnimation} className="mt-40 flex flex-col items-center gap-6 text-center">
-            <div className="h-px w-20 bg-white/10" />
-            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-[0.4em]">Internal System Testing</p>
-            <div className="flex gap-6">
-                <button onClick={() => initiateLogin(UserRole.CLIENT)} className="text-[10px] font-bold uppercase tracking-widest border border-white/10 px-6 py-2 rounded-lg hover:border-sky-500/50 hover:text-sky-400 transition-all">Client Profile</button>
-                <button onClick={() => initiateLogin(UserRole.ADMIN)} className="text-[10px] font-bold uppercase tracking-widest border border-white/10 px-6 py-2 rounded-lg hover:border-sky-500/50 hover:text-sky-400 transition-all">Admin Profile</button>
-            </div>
-        </motion.div>
       </section>
 
       {/* Detailed Services Section */}
@@ -440,7 +388,7 @@ const App: React.FC = () => {
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className={`text-[10px] font-bold uppercase tracking-[0.2em] px-1 ${isDarkMode ? 'text-gray-500' : 'text-slate-500'}`}>Identity</label>
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] px-1 text-gray-500">Identity</label>
                       <input 
                         required
                         name="name"
@@ -450,7 +398,7 @@ const App: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={`text-[10px] font-bold uppercase tracking-[0.2em] px-1 ${isDarkMode ? 'text-gray-500' : 'text-slate-500'}`}>Signal Address</label>
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] px-1 text-gray-500">Signal Address</label>
                       <input 
                         required
                         name="email"
@@ -461,7 +409,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className={`text-[10px] font-bold uppercase tracking-[0.2em] px-1 ${isDarkMode ? 'text-gray-500' : 'text-slate-500'}`}>Mission Objective</label>
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] px-1 text-gray-500">Mission Objective</label>
                     <input 
                       required
                       name="subject"
@@ -471,7 +419,7 @@ const App: React.FC = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className={`text-[10px] font-bold uppercase tracking-[0.2em] px-1 ${isDarkMode ? 'text-gray-500' : 'text-slate-500'}`}>Message Body</label>
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] px-1 text-gray-500">Message Body</label>
                     <textarea 
                       required
                       name="message"
@@ -498,18 +446,13 @@ const App: React.FC = () => {
   return (
     <div className="bg-black text-white min-h-screen selection:bg-sky-500/30">
       <Navbar 
-        currentRole={role} 
         onNavigate={(view) => {
           if (view === 'HOME') handleHomeClick();
-          else if (view === 'PORTAL') initiateLogin(UserRole.CLIENT);
           else setCurrentView(view);
         }} 
         onServicesClick={() => scrollToSection('services-section')}
         onContactClick={() => scrollToSection('contact-section')}
-        onLogout={handleLogout} 
         onHomeClick={handleHomeClick}
-        isDarkMode={isDarkMode}
-        onToggleTheme={toggleTheme}
       />
       
       <AnimatePresence mode="wait">
@@ -522,35 +465,18 @@ const App: React.FC = () => {
         >
           {currentView === 'HOME' && renderHome()}
           {currentView === 'FUNNEL' && <SalesFunnel onComplete={() => setCurrentView('HOME')} />}
-          {currentView === 'LOGIN' && (
-            <LoginForm 
-              role={loginTarget} 
-              onBack={() => setCurrentView('HOME')} 
-              onSuccess={handleLoginSuccess}
-              onSignUpClick={() => setCurrentView('SIGNUP')}
-            />
-          )}
-          {currentView === 'SIGNUP' && (
-            <SignUpForm 
-              onBack={() => setCurrentView('HOME')}
-              onLoginClick={() => setCurrentView('LOGIN')}
-              onSuccess={handleSignUpSuccess}
-            />
-          )}
-          {currentView === 'PORTAL' && <ClientPortal />}
-          {currentView === 'ADMIN' && <AdminDashboard />}
         </motion.div>
       </AnimatePresence>
 
-      <footer className={`py-20 border-t text-center relative overflow-hidden transition-colors duration-400 ${isDarkMode ? 'border-white/5 bg-black/50' : 'border-slate-200 bg-slate-50'}`}>
-        <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 blur-[100px] -z-0 transition-opacity ${isDarkMode ? 'bg-sky-500/5 opacity-100' : 'bg-sky-500/10 opacity-40'}`} />
+      <footer className="py-20 border-t text-center relative overflow-hidden transition-colors duration-400 border-white/5 bg-black/50">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 blur-[100px] -z-0 transition-opacity bg-sky-500/5 opacity-100" />
         <div className="relative z-10">
           <div className="flex justify-center gap-12 mb-10">
             <a href="#" className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-sky-400 transition-colors">X-Social</a>
             <a href="#" className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-sky-400 transition-colors">LinkedIn</a>
             <a href="#" className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 hover:text-sky-400 transition-colors">Dribbble</a>
           </div>
-          <p className={`text-[10px] font-bold uppercase tracking-[0.5em] transition-colors ${isDarkMode ? 'text-gray-700' : 'text-slate-400'}`}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.5em] transition-colors text-gray-700">
             &copy; 2024 JETFUEL SYSTEMS. HIGH-VELOCITY DIGITAL OPS.
           </p>
         </div>
